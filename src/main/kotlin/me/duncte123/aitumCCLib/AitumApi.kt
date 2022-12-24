@@ -1,8 +1,7 @@
 package me.duncte123.aitumCCLib
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import java.net.InetAddress
+import java.util.concurrent.CompletableFuture
 import javax.jmdns.JmDNS
 import javax.jmdns.ServiceEvent
 import javax.jmdns.ServiceListener
@@ -32,11 +31,21 @@ object AitumApi {
         })
     }
 
-    suspend fun findAitum(): String {
-        while (base == "") {
-            delay(100)
-        }
+    fun findAitum(): CompletableFuture<String> {
+        val future = CompletableFuture<String>()
 
-        return base
+        Thread {
+            try {
+                while (base == "") {
+                    Thread.sleep(100)
+                }
+
+                future.complete(base)
+            } catch (e: Exception) {
+                future.completeExceptionally(e)
+            }
+        }.start()
+
+        return future
     }
 }
