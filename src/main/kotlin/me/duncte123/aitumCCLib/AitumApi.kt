@@ -16,15 +16,15 @@ object AitumApi {
 
         jmdns.addServiceListener("_pebble._tcp.local.", object : ServiceListener {
             override fun serviceAdded(event: ServiceEvent) {
-                println("Service added: ${event.info}")
+                // println("Service added: ${event.info}")
             }
 
             override fun serviceRemoved(event: ServiceEvent) {
-                println("Service removed: ${event.info}")
+                // println("Service removed: ${event.info}")
             }
 
             override fun serviceResolved(event: ServiceEvent) {
-                println("Aitum resolved")
+                // println("Aitum resolved")
                 base = "http://${event.info.inet4Addresses.first()}:7777"
                 jmdns.close()
             }

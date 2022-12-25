@@ -1,8 +1,10 @@
 package me.duncte123.aitumCCLib.inputs
 
+import org.json.JSONObject
+
 sealed interface IValidation {
-    fun toJSON() {
-        // TODO: To a map and then to json?
+    fun toJSON(): JSONObject {
+        return JSONObject(toMap())
     }
 
     fun toMap(): MutableMap<String, Any> {
@@ -10,7 +12,7 @@ sealed interface IValidation {
     }
 }
 
-sealed class SimpleInputValidation(private val required: Boolean) : IValidation {
+open class SimpleInputValidation(private val required: Boolean) : IValidation {
     override fun toMap(): MutableMap<String, Any> {
         val baseMap = super.toMap()
 

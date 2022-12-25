@@ -36,7 +36,16 @@ class Requester(var masterBase: String) {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                future.complete(null)
+                if (response.code == 200) {
+                    future.complete(null)
+                    return
+                }
+
+                val resData = JSONObject(response.body?.string())
+
+                future.completeExceptionally(
+                    Exception(resData.getString("error"))
+                )
             }
         })
 
