@@ -12,6 +12,32 @@ import java.util.concurrent.CompletableFuture
 class Requester(var masterBase: String) {
     private val client = OkHttpClient()
 
+    fun masterHealthCheck(): CompletableFuture<Boolean> {
+        val future = CompletableFuture<Boolean>()
+
+        val request = Request.Builder()
+            .get()
+            .url(masterBase)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                future.completeExceptionally(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.code == 200) {
+                    future.complete(true)
+                    return
+                }
+
+                future.complete(false)
+            }
+        })
+
+        return future
+    }
+
     fun registerSelf(actions: List<ICustomCode>): CompletableFuture<Void> {
         val future = CompletableFuture<Void>()
         val env = EnvContainer.currEnv!!
