@@ -2,15 +2,12 @@ package me.duncte123.aitumCCLib
 
 import org.json.JSONArray
 
-// TODO: figure out a way of making the input type dynamic for the value
-class ReceivedInput(private val value: Any?) {
-
-    fun isNull() = value == null
+class ReceivedInput(private val value: Any) {
 
     val asString: String
         get () {
             if (value !is String) {
-                throw Error("This input is not of string type. Detected type: ${value?.javaClass}")
+                throw Error("This input is not of string type. Detected type: ${value.javaClass}")
             }
 
             return value
@@ -19,7 +16,7 @@ class ReceivedInput(private val value: Any?) {
     val asStringList: List<String>
         get () {
             if (value !is JSONArray) {
-                throw Error("This input is not of string[] type. Detected type: ${value?.javaClass}")
+                throw Error("This input is not of string[] type. Detected type: ${value.javaClass}")
             }
 
             return value.toList().map { it.toString() }
@@ -28,7 +25,7 @@ class ReceivedInput(private val value: Any?) {
     val asBoolean: Boolean
         get () {
             if (value !is Boolean) {
-                throw Error("This input is not of boolean type. Detected type: ${value?.javaClass}")
+                throw Error("This input is not of boolean type. Detected type: ${value.javaClass}")
             }
 
             return value
@@ -37,7 +34,7 @@ class ReceivedInput(private val value: Any?) {
     val asInt: Int
         get () {
             if (value !is Int) {
-                throw Error("This input is not of int type. Detected type: ${value?.javaClass}")
+                throw Error("This input is not of int type. Detected type: ${value.javaClass}")
             }
 
             return value
@@ -46,7 +43,7 @@ class ReceivedInput(private val value: Any?) {
     val asFloat: Float
         get () {
             if (value !is Float) {
-                throw Error("This input is not of int type. Detected type: ${value?.javaClass}")
+                throw Error("This input is not of int type. Detected type: ${value.javaClass}")
             }
 
             return value

@@ -63,9 +63,8 @@ class AitumCC {
 
         val resData = mutableMapOf<String, ReceivedInput>()
 
-        // TODO: Remove null items from the map or keep them in?
         postBody.toMap()
-            // .filter { (_, v) -> v != null }
+            .filter { (_, v) -> v != null }
             .forEach { (k, v) ->
             resData[k] = ReceivedInput(v)
         }

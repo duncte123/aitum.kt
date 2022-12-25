@@ -29,21 +29,27 @@ class DummyAction : ICustomCode() {
                 required = false
             )
         ),
+        // Does not work yet
+        "testListInput" to StringListInput(
+            "Favourite Food", SimpleInputValidation(
+                required = false
+            )
+        ),
     )
 
     override fun method(inputs: Map<String, ReceivedInput>) {
         logger.info("I am a dummy action!!")
 
-        println(inputs)
+        logger.info(inputs.toString())
 
         // Name is optional so we cannot never null cast it
 
-        val strInput = inputs["testStringInput"]!!
+        val strInput = inputs["testStringInput"]
 
-        if (!strInput.isNull()) {
-            logger.info("Name: ${strInput.asString}")
-        } else {
+        if (strInput == null) {
             logger.warn("testStringInput is null :O")
+        } else {
+            logger.info("Name: ${strInput.asString}")
         }
 
         logger.info("age ${inputs["testIntInput"]!!.asInt}")
